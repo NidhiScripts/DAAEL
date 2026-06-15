@@ -962,7 +962,7 @@
     let simulationCounter = 0;
     
     // IP Settings
-    let gatewayIp = window.location.hostname || "192.168.1.100";
+    let gatewayIp = "YOUR_ESP32_IP";
     let camStreamIp = "http://192.168.1.101:81/stream";
 
     // Sensor Readings History
@@ -1030,7 +1030,7 @@
 
       // Default date & time
       updateDateTime();
-      setInterval(updateDateTime, 1000);
+      setInterval(tick, 500);
     };
 
     // Auth actions
@@ -1060,7 +1060,8 @@
       initDigitalTwin();
       
       // Determine default mode based on protocol
-      const initialMode = window.location.protocol === 'file:' ? 'sim' : 'live';
+      const initialMode = 'live';
+mode = 'live';
       setMode(initialMode);
       
       // Start loops

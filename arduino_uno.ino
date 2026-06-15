@@ -15,8 +15,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // Check your LCD address, commonly 0x27 or 
 SoftwareSerial espSerial(8, 9);
 
 unsigned long lastSendTime = 0;
-const unsigned long sendInterval = 2000; // Send standard updates every 2 seconds
-
+const unsigned long sendInterval = 500;
 void setup() {
   Serial.begin(9600);
   espSerial.begin(9600); // Communication with ESP32 Gateway

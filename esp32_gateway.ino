@@ -2196,8 +2196,12 @@ void setup() {
   }
   
   Serial.println("\nWiFi connected successfully!");
-  Serial.print("Access the IoT Dashboard API at: http://");
-  Serial.println(WiFi.localIP());
+ Serial.println();
+Serial.println("================================");
+Serial.println("ESP32 Connected Successfully");
+Serial.print("IP Address: ");
+Serial.println(WiFi.localIP());
+Serial.println("================================");
 
   // Web Server Routes with CORS headers
   server.on("/", []() {
