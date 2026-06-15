@@ -240,7 +240,7 @@ const char index_html[] PROGMEM = R"rawliteral(
           </div>
           <div class="bg-zinc-900/80 border border-zinc-800 p-2.5 rounded-xl text-center min-w-[90px]">
             <div class="text-[10px] uppercase font-bold text-zinc-500 leading-none mb-1">Active Devices</div>
-            <div class="font-mono text-base font-black text-cyan-400">4 / 4</div>
+            <div id="activeDevices" class="font-mono text-base font-black text-cyan-400">4 / 4</div>
           </div>
         </div>
         
