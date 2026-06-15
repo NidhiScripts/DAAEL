@@ -1256,7 +1256,7 @@ const char index_html[] PROGMEM = R"rawliteral(
       drawTwinDiagram();
     }
 
-    // Fetch live data
+    // Fetch live hardware data
     function fetchGatewayData() {
       const url = window.location.protocol === 'file:' 
         ? `http://${gatewayIp}/api/data` 
@@ -1264,6 +1264,7 @@ const char index_html[] PROGMEM = R"rawliteral(
       fetch(url)
         .then(res => res.json())
         .then(data => {
+          // Parse JSON format matching: {"t": 25.5, "h": 60.0, "g": 350, "q": "high", "seq": 12}
           const t = parseFloat(data.t) || 0;
           const h = parseFloat(data.h) || 0;
           const g = parseInt(data.g) || 0;
@@ -1271,16 +1272,23 @@ const char index_html[] PROGMEM = R"rawliteral(
           
           updateSensorsUI(t, h, g, g >= 400);
           
+          // Increment received counters
           stats.recv++;
           stats.sent++;
           if (g >= 400) {
             stats.critical++;
           }
+          
+          document.getElementById("activeDevices").innerText = "4 / 4";
+          
+          // Live telemetry UI update for packet comparison & metrics
+          updateFIFOVsQoSRouter();
         })
         .catch(err => {
           console.warn("Live API connection failed: ", err);
-          if (simulationCounter % 15 === 0) {
-            logEvent(`[${new Date().toISOString().slice(11, 19)}] API gateway unreachable. Running fallback routines...`);
+          // Show clear networking error diagnostics in the NOC log
+          if (simulationCounter % 5 === 0) {
+            logEvent(`[${new Date().toISOString().slice(11, 19)}] ERROR: Failed to connect to ${url}. Reason: ${err.message}. Check ESP32 IP or WiFi subnet.`);
           }
           runSimulationData();
         });
